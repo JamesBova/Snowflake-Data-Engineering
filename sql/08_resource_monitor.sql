@@ -1,0 +1,19 @@
+-- =========================================================
+-- Resource Monitor Demo
+-- =========================================================
+
+CREATE OR REPLACE RESOURCE MONITOR SNOWFLAKE_DE_MONITOR
+    WITH CREDIT_QUOTA = 5
+    FREQUENCY = MONTHLY
+    START_TIMESTAMP = IMMEDIATELY
+    TRIGGERS
+        ON 75 PERCENT DO NOTIFY
+        ON 90 PERCENT DO NOTIFY
+        ON 100 PERCENT DO SUSPEND;
+
+
+ALTER WAREHOUSE SNOWFLAKE_DE_WH
+SET RESOURCE_MONITOR = SNOWFLAKE_DE_MONITOR;
+
+
+SHOW RESOURCE MONITORS;
